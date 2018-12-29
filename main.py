@@ -6,5 +6,7 @@ import os.path;
 import numpy as np;
 from mnist.mnist import mnist;
 
-data = mnist();
+a = mnist();
+
+print(a.testImg.shape);
 
