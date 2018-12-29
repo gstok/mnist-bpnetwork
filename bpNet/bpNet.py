@@ -31,6 +31,7 @@ class bpNet:
     # 初始化层参数，包括权重和偏置
     def initLayerParam (self, inputSize, outputSize):
         param = { };
+        # 利用高斯分布初始化权重矩阵
         param["weight"] = np.random.randn(inputSize, outputSize);
         param["bias"] = np.zeros(outputSize);
         return param;
