@@ -8,5 +8,5 @@ from mnist.mnist import mnist;
 
 a = mnist();
 
-print(a.testImg.shape);
+print(a.trainLabel[0]);
 

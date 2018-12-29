@@ -24,7 +24,7 @@ fileMap["testLabel"] = "t10k-labels-idx1-ubyte.gz";
 
 class mnist:
     # 构造函数
-    def __init__ (self, normalize = True, flatten = True, oneHotLabel = False):
+    def __init__ (self, normalize = True, flatten = True, oneHotLabel = True):
         self.pklPath = curDirPath + "mnist.pkl";
         self.initFileMap();
         if os.path.exists(self.pklPath):
@@ -32,6 +32,15 @@ class mnist:
         else:
             self.tryToDownloadMnist();
             self.loadMnist();
+        if (normalize):
+            self.trainImg = self.imageNormalize(self.trainImg);
+            self.testImg = self.imageNormalize(self.testImg);
+        if (not flatten):
+            self.trainImg = self.imageRestore(self.trainImg);
+            self.testImg = self.imageRestore(self.testImg);
+        if (oneHotLabel):
+            self.trainLabel = self.changeOneHotLabel(self.trainLabel);
+            self.testLabel = self.changeOneHotLabel(self.testLabel);
     # 整理mnist文件资源Map，整理出下载地址以及下载路径
     def initFileMap (self):
         self.fileMap = collections.OrderedDict();
@@ -90,3 +99,16 @@ class mnist:
         self.trainLabel = obj["trainLabel"];
         self.testImg = obj["testImg"];
         self.testLabel = obj["testLabel"];
+    # 图像正规化
+    def imageNormalize (self, data):
+        newData = data.astype(np.float);
+        return newData / 255.0;
+    # 图像恢复形状
+    def imageRestore (self, data):
+        return data.reshape(-1, 1, 28, 28);
+    # 修改标签为OneHot模式
+    def changeOneHotLabel (self, data):
+        newData = np.zeros((data.size, 10));
+        for index, row in enumerate(newData):
+            row[data[index]] = 1;
+        return newData;
