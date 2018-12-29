@@ -5,8 +5,9 @@ import sys, os;
 import os.path;
 import numpy as np;
 from mnist.mnist import mnist;
+from bpNet import bpNet;
 
-a = mnist();
+mstData = mnist();
 
-print(a.trainLabel[0]);
+net = bpNet();
 
