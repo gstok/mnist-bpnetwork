@@ -27,3 +27,22 @@ class sigmoid:
         return self.y;
     def backward (self, d):
         return d * self.y * (1.0 - self.y);
+
+# affine层的实现
+class affine:
+    def __init__ (self, weight, bias):
+        self.x = None;
+        self.weight = weight;
+        self.bias = bias;
+        self.xD = None;
+        self.weightD = None;
+        self.biasD = None;
+    def forward (self, x):
+        self.x = x;
+        return np.dot(x, self.weight) + self.bias;
+    def backward (self, d):
+        self.xD = np.dot(d, self.weight.T);
+        self.weightD = np.dot(d, self.x.T);
+        self.biasD = np.sum(d, axis = 0);
+        return self.xD;
+
