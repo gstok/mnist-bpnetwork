@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-print("你好，世界");
+import sys, os;
+import os.path;
+import numpy as np;
+from mnist.mnist import mnist;
+
+data = mnist();
+
