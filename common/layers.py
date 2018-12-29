@@ -37,12 +37,22 @@ class affine:
         self.xD = None;
         self.weightD = None;
         self.biasD = None;
+
+        self.original_x_shape = None;
+        
     def forward (self, x):
+
+        self.original_x_shape = x.shape;
+        x = x.reshape(x.shape[0], -1);
+
         self.x = x;
         return np.dot(x, self.weight) + self.bias;
     def backward (self, d):
         self.xD = np.dot(d, self.weight.T);
-        self.weightD = np.dot(d, self.x.T);
+        self.weightD = np.dot(self.x.T, d);
         self.biasD = np.sum(d, axis = 0);
+
+        self.xD = self.xD.reshape(* self.original_x_shape);
+
         return self.xD;
 

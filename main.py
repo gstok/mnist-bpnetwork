@@ -8,16 +8,13 @@ from mnist.mnist import mnist;
 from bpNet.bpNet import bpNet;
 from common.layers import reLu;
 
-# net = bpNet();
-a = reLu();
-x = np.array([
-    [1, -1, -0.1],
-    [1, 1, 0],
+a = np.array([
+    1,
+    2,
 ]);
-r = a.forward(x);
-b = a.backward(np.array([
-    [9, -1, 1],
-    [-0.31, 2, 3],
-]));
-print(b);
+b = np.array([
+    [1, 2, 3],
+    [4, 5, 6],
+]);
+print(np.dot(b, a));
 
