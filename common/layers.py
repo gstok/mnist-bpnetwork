@@ -1,6 +1,7 @@
 
 import numpy as np;
 
+# relu层实现
 class reLu:
     def __init__ (self):
         self.mask = None;
@@ -16,3 +17,13 @@ class reLu:
         result = d.copy();
         result[self.mask] = 0;
         return result;
+
+# sigmoid层实现
+class sigmoid:
+    def __init__ (self):
+        pass;
+    def forward (self, x):
+        self.y = 1.0 / (1.0 + np.exp(-x));
+        return self.y;
+    def backward (self, d):
+        return d * self.y * (1.0 - self.y);
