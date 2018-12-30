@@ -17,6 +17,7 @@ class bpNet:
         self.hiddenLayersSize = hiddenLayersSize;
         self.params = self.initParams();
         self.hiddenLayers = self.initHiddenLayers();
+        self.lastLayer = softmaxLoss();
 
     # 使用神经网络进行预测
     def predict (self, x):
@@ -24,6 +25,11 @@ class bpNet:
         for layer in self.hiddenLayers:
             y = layer.forward(y);
         return y;
+
+    # 计算损失函数
+    def loss (self, x, t):
+        y = self.predict(x);
+        return self.lastLayer.forward(x, t);
 
 
     # 根据初始化的参数构建隐藏层
