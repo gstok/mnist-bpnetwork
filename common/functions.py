@@ -21,14 +21,22 @@ def softmax (x):
         cpx -= np.max(cpx);
         return np.exp(cpx) / np.sum(np.exp(cpx));
 
+# 支持批处理版本的交叉熵函数
 def crossEntropyError(y, t):
-    if y.ndim == 1:
+    # 为了兼容处理，变换一维数据为二维数据
+    if (y.ndim == 1):
         t = t.reshape(1, t.size)
         y = y.reshape(1, y.size)
         
-    # 教師データがone-hot-vectorの場合、正解ラベルのインデックスに変換
-    if t.size == y.size:
-        t = t.argmax(axis=1)
-             
-    batch_size = y.shape[0]
-    return -np.sum(np.log(y[np.arange(batch_size), t] + 1e-7)) / batch_size
+    # 如果输出数据和标签数据size一致，则证明为onehot模式
+    # 此操作会把onehot模式变为非onthot模式以兼容处理
+    if (t.size == y.size):
+        # axis为1的时候才是横向取最大
+        t = t.argmax(axis = 1);
+
+    # 获取批size
+    batchSize = y.shape[0];
+    # np.arange(batch_size) 生成0,1,2,3...这样的数列，这里相当于选择y的所有行
+    # t相当于锁定到每一行label标记的正确位置上，取出那个数据
+    return -np.sum(np.log(y[np.arange(batchSize), t] + 1e-7)) / batchSize;
+
