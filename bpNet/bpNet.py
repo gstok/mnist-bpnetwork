@@ -29,7 +29,7 @@ class bpNet:
     # 计算损失函数
     def loss (self, x, t):
         y = self.predict(x);
-        return self.lastLayer.forward(x, t);
+        return self.lastLayer.forward(y, t);
 
 
     # 根据初始化的参数构建隐藏层

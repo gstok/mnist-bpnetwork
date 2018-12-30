@@ -11,4 +11,5 @@ mstData = mnist();
 img = mstData.trainImg[100];
 label = mstData.trainLabel[100];
 net = bpNet();
-net.loss(mstData.trainImg, mstData.trainLabel);
+y = net.loss(mstData.trainImg, mstData.trainLabel);
+print(y.shape);

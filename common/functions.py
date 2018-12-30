@@ -1,7 +1,7 @@
 
 import numpy as np;
 
-# softmax函数，此函数的作用是取0~1的概率分布
+# 旧的softmax函数，仅仅支持单个维度，此函数的作用是取0~1的概率分布
 def softmax1 (x):
     c = np.max(x);
     expA = np.exp(x - c);
@@ -9,15 +9,17 @@ def softmax1 (x):
     y = expA / sumExpA;
     return y;
 
-def softmax(x):
-    if x.ndim == 2:
-        x = x.T
-        x = x - np.max(x, axis=0)
-        y = np.exp(x) / np.sum(np.exp(x), axis=0)
-        return y.T 
-
-    x = x - np.max(x) # オーバーフロー対策
-    return np.exp(x) / np.sum(np.exp(x))
+# 支持批处理的softmax函数
+def softmax (x):
+    cpx = x.copy();
+    if (cpx.ndim == 2):
+        cpx = cpx.T;
+        cpx -= np.max(cpx, axis = 0);
+        y = np.exp(cpx) / np.sum(np.exp(cpx), axis = 0);
+        return y.T;
+    else:
+        cpx -= np.max(cpx);
+        return np.exp(cpx) / np.sum(np.exp(cpx));
 
 def crossEntropyError(y, t):
     if y.ndim == 1:
