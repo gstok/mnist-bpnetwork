@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import numpy as np;
+from common.layers import *;
 
 class bpNet:
     # 构造函数
@@ -15,6 +16,9 @@ class bpNet:
         self.outputSize = outputSize;
         self.hiddenLayersSize = hiddenLayersSize;
         self.params = self.initParams();
+
+    
+
 
     # 初始化各层参数
     def initParams (self):

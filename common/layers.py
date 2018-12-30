@@ -38,10 +38,12 @@ class affine:
         self.weightD = None;
         self.biasD = None;
 
+        # 不知这是做什么的
         self.original_x_shape = None;
         
     def forward (self, x):
 
+        # 不知这是做什么的
         self.original_x_shape = x.shape;
         x = x.reshape(x.shape[0], -1);
 
@@ -52,6 +54,7 @@ class affine:
         self.weightD = np.dot(self.x.T, d);
         self.biasD = np.sum(d, axis = 0);
 
+        # 不知这是做什么的
         self.xD = self.xD.reshape(* self.original_x_shape);
 
         return self.xD;
