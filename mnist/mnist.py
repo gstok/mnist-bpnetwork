@@ -112,3 +112,6 @@ class mnist:
         for index, row in enumerate(newData):
             row[data[index]] = 1;
         return newData;
+
+if __name__ == '__main__':
+    a = mnist();

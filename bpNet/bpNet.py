@@ -8,7 +8,7 @@ class bpNet:
     # 构造函数
     def __init__ (
         self,
-        inputSize =  785,
+        inputSize =  784,
         outputSize = 10,
         hiddenLayersSize = [300, 200, 100, 50, 20],
     ):
@@ -16,9 +16,29 @@ class bpNet:
         self.outputSize = outputSize;
         self.hiddenLayersSize = hiddenLayersSize;
         self.params = self.initParams();
+        self.hiddenLayers = self.initHiddenLayers();
 
-    
+    # 使用神经网络进行预测
+    def predict (self, x):
+        y = x.copy();
+        for layer in self.hiddenLayers:
+            y = layer.forward(y);
+        return y;
 
+
+    # 根据初始化的参数构建隐藏层
+    def initHiddenLayers (self):
+        layers = [];
+        for index, value in enumerate(self.params):
+            weight = value["weight"];
+            bias = value["bias"];
+            layer = None;
+            if (index == len(self.params) - 1):
+                layer = affine(weight, bias);
+            else:
+                layer = affineReLu(weight, bias);
+            layers.append(layer);
+        return layers;
 
     # 初始化各层参数
     def initParams (self):
