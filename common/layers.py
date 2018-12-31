@@ -40,7 +40,7 @@ class affine:
         self.biasD = None;
 
         # 不知这是做什么的
-        self.original_x_shape = None;
+        # self.original_x_shape = None;
         
     def forward (self, x):
 
@@ -56,7 +56,7 @@ class affine:
         self.biasD = np.sum(d, axis = 0);
 
         # 不知这是做什么的
-        self.xD = self.xD.reshape(* self.original_x_shape);
+        # self.xD = self.xD.reshape(* self.original_x_shape);
 
         return self.xD;
 
@@ -75,28 +75,30 @@ class affineReLu:
         return outD;
 
 class softmaxLoss:
-    def __init__(self):
-        self.loss = None
-        self.y = None # softmaxの出力
-        self.t = None # 教師データ
+    def __init__ (self):
+        self.loss = None;
+        # softmax函数的输出
+        self.y = None;
+        self.t = None;
 
-    def forward(self, x, t):
-        self.t = t
-        self.y = softmax(x)
-        self.loss = crossEntropyError(self.y, self.t)
-        print(self.loss);
+    # 前向传播，这里分别计算了softmax输出和交叉熵，返回softmax输出
+    def forward (self, x, t):
+        self.t = t;
+        self.y = softmax(x);
+        self.loss = crossEntropyError(self.y, self.t);
         return self.y;
 
-    def backward(self, dout=1):
-        batch_size = self.t.shape[0]
-        if self.t.size == self.y.size: # 教師データがone-hot-vectorの場合
-            dx = (self.y - self.t) / batch_size
+    def backward (self, dout = 1):
+        batchSize = self.t.shape[0];
+        # 如果是onthot模式
+        if (self.t.size == self.y.size):
+            # 除以批大小，传递的是单个数据误差？
+            dx = (self.y - self.t) / batchSize
         else:
-            dx = self.y.copy()
-            dx[np.arange(batch_size), self.t] -= 1
-            dx = dx / batch_size
-        
-        return dx
+            dx = self.y.copy();
+            dx[np.arange(batchSize), self.t] -= 1;
+            dx /= batchSize;
+        return dx;
 
 
 

@@ -31,6 +31,14 @@ class bpNet:
         y = self.predict(x);
         return self.lastLayer.forward(y, t);
 
+    # 反向传播计算梯度
+    def gradient (self, x, t):
+        self.loss(x, t);
+        d = 1;
+        d = self.lastLayer.backward(d);
+        for index in range(len(self.hiddenLayers) - 1, -1, -1):
+            d = self.hiddenLayers[index].backward(d);
+
 
     # 根据初始化的参数构建隐藏层
     def initHiddenLayers (self):
