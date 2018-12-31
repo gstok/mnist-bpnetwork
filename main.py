@@ -12,3 +12,4 @@ img = mstData.trainImg[100];
 label = mstData.trainLabel[100];
 net = bpNet();
 y = net.gradient(mstData.trainImg, mstData.trainLabel);
+print(len(net.hiddenLayers));

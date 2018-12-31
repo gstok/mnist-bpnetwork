@@ -92,8 +92,10 @@ class softmaxLoss:
         batchSize = self.t.shape[0];
         # 如果是onthot模式
         if (self.t.size == self.y.size):
-            # 除以批大小，传递的是单个数据误差？
-            dx = (self.y - self.t) / batchSize
+            # 除以批大小，传递的是单个数据误差
+            # 因为进行的是两个相同的矩阵的减法，求出的每一个导数值都是独立的，除一下批大小
+            # 这个要画计算图才能理解
+            dx = (self.y - self.t) / batchSize;
         else:
             dx = self.y.copy();
             dx[np.arange(batchSize), self.t] -= 1;
