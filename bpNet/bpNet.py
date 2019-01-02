@@ -10,11 +10,13 @@ class bpNet:
         self,
         inputSize =  784,
         outputSize = 10,
-        hiddenLayersSize = [300, 200, 100, 50, 20],
+        hiddenLayersSize = [640, 160, 40],
+        weightInitStd = 0.01,
     ):
         self.inputSize = inputSize;
         self.outputSize = outputSize;
         self.hiddenLayersSize = hiddenLayersSize;
+        self.weightInitStd = weightInitStd;
         self.params = self.initParams();
         self.hiddenLayers = self.initHiddenLayers();
         self.lastLayer = softmaxLoss();
@@ -65,11 +67,14 @@ class bpNet:
                 param = self.initLayerParam(prevSize, curSize);
                 params.append(param);
         return params;
-
     # 初始化层参数，包括权重和偏置
     def initLayerParam (self, inputSize, outputSize):
         param = { };
         # 利用高斯分布初始化权重矩阵
-        param["weight"] = np.random.randn(inputSize, outputSize);
-        param["bias"] = np.zeros(outputSize);
+        param["weight"] = self.weightInitStd * np.random.randn(inputSize, outputSize);
+        param["bias"] = self.weightInitStd * np.zeros(outputSize);
         return param;
+
+    # 更新神经网络参数
+    def update (self):
+        pass;
