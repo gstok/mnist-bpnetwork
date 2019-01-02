@@ -10,7 +10,7 @@ class bpNet:
         self,
         inputSize =  784,
         outputSize = 10,
-        hiddenLayersSize = [100, 50],
+        hiddenLayersSize = [300, 100, 30],
         weightInitStd = 0.01,
     ):
         self.inputSize = inputSize;
@@ -49,7 +49,7 @@ class bpNet:
         print(np.sum(c));
 
     # 根据保存在各层的梯度更新神经网络参数
-    def update (self, learningRate = 0.3):
+    def update (self, learningRate = 0.1):
         for layer in self.hiddenLayers:
             weight = None;
             bias = None;
