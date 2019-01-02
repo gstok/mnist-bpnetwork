@@ -33,6 +33,7 @@ for index in range(itersNum):
     imgs = trainImg[choiceIndexs];
     labels = trainLabel[choiceIndexs];
     network.gradient(imgs, labels);
+    network.accuracy();
     print(network.lastLayer.loss);
     network.update();
 

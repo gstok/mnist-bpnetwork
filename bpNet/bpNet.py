@@ -41,6 +41,24 @@ class bpNet:
         for index in range(len(self.hiddenLayers) - 1, -1, -1):
             d = self.hiddenLayers[index].backward(d);
 
+    # 计算网络预测精度
+    def accuracy (self):
+        a = np.argmax(self.lastLayer.y, axis = 1);
+        b = np.argmax(self.lastLayer.t, axis = 1);
+        c = a != b;
+        print(np.sum(c));
+
+    # 根据保存在各层的梯度更新神经网络参数
+    def update (self, learningRate = 0.3):
+        for layer in self.hiddenLayers:
+            weight = None;
+            bias = None;
+            if (isinstance(layer, affineReLu)):
+                layer.affineLayer.weight -= layer.affineLayer.weightD * learningRate;
+                layer.affineLayer.bias -= layer.affineLayer.bias * learningRate;
+            elif (isinstance(layer, affine)):
+                layer.weight -= layer.weightD * learningRate;
+                layer.bias -= layer.biasD * learningRate;
 
     # 根据初始化的参数构建隐藏层
     def initHiddenLayers (self):
@@ -74,15 +92,3 @@ class bpNet:
         param["weight"] = self.weightInitStd * np.random.randn(inputSize, outputSize);
         param["bias"] = self.weightInitStd * np.zeros(outputSize);
         return param;
-
-    # 更新神经网络参数
-    def update (self, learningRate = 0.1):
-        for layer in self.hiddenLayers:
-            weight = None;
-            bias = None;
-            if (isinstance(layer, affineReLu)):
-                layer.affineLayer.weight -= layer.affineLayer.weightD * learningRate;
-                layer.affineLayer.bias -= layer.affineLayer.bias * learningRate;
-            elif (isinstance(layer, affine)):
-                layer.weight -= layer.weightD * learningRate;
-                layer.bias -= layer.biasD * learningRate;
