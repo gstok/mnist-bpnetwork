@@ -21,7 +21,7 @@ trainSize = trainImg.shape[0];
 # 训练批大小
 batchSize = 100;
 # 迭代次数
-itersNum = 100000;
+itersNum = 10000;
 # 学习率
 learningRate = 0.1;
 
@@ -32,8 +32,9 @@ for index in range(itersNum):
     choiceIndexs = np.random.choice(trainSize, batchSize);
     imgs = trainImg[choiceIndexs];
     labels = trainLabel[choiceIndexs];
-    y = network.gradient(imgs, labels);
+    network.gradient(imgs, labels);
     print(network.lastLayer.loss);
+    network.update();
 
 
 # net = bpNet();

@@ -10,7 +10,7 @@ class bpNet:
         self,
         inputSize =  784,
         outputSize = 10,
-        hiddenLayersSize = [640, 160, 40],
+        hiddenLayersSize = [100, 50],
         weightInitStd = 0.01,
     ):
         self.inputSize = inputSize;
@@ -76,5 +76,13 @@ class bpNet:
         return param;
 
     # 更新神经网络参数
-    def update (self):
-        pass;
+    def update (self, learningRate = 0.1):
+        for layer in self.hiddenLayers:
+            weight = None;
+            bias = None;
+            if (isinstance(layer, affineReLu)):
+                layer.affineLayer.weight -= layer.affineLayer.weightD * learningRate;
+                layer.affineLayer.bias -= layer.affineLayer.bias * learningRate;
+            elif (isinstance(layer, affine)):
+                layer.weight -= layer.weightD * learningRate;
+                layer.bias -= layer.biasD * learningRate;
