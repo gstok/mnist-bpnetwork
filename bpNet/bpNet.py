@@ -10,7 +10,7 @@ class bpNet:
         self,
         inputSize =  784,
         outputSize = 10,
-        hiddenLayersSize = [300, 100, 30],
+        hiddenLayersSize = [100, 50],
         weightInitStd = 0.01,
     ):
         self.inputSize = inputSize;

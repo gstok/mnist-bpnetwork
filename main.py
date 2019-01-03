@@ -25,10 +25,12 @@ batchSize = 100;
 itersNum = 100000;
 # 学习率
 learningRate = 0.1;
-
+# 轮数
 iterPerEpoch = max((trainSize / batchSize), 1);
 
 network = None;
+
+# 利用网络模型求导
 # with open("network.pkl", "rb") as f:
 #     network = pickle.load(f);
 
