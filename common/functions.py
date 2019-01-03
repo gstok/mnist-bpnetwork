@@ -2,7 +2,7 @@
 import numpy as np;
 
 # 旧的softmax函数，仅仅支持单个维度，此函数的作用是取0~1的概率分布
-def softmax1 (x):
+def softmaxOld (x):
     c = np.max(x);
     expA = np.exp(x - c);
     sumExpA = np.sum(expA);
@@ -25,8 +25,8 @@ def softmax (x):
 def crossEntropyError(y, t):
     # 为了兼容处理，变换一维数据为二维数据
     if (y.ndim == 1):
-        t = t.reshape(1, t.size)
-        y = y.reshape(1, y.size)
+        t = t.reshape(1, t.size);
+        y = y.reshape(1, y.size);
         
     # 如果输出数据和标签数据size一致，则证明为onehot模式
     # 此操作会把onehot模式变为非onthot模式以兼容处理

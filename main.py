@@ -26,31 +26,31 @@ itersNum = 100000;
 # 学习率
 learningRate = 0.1;
 
+iterPerEpoch = max((trainSize / batchSize), 1);
+
+network = None;
+# with open("network.pkl", "rb") as f:
+#     network = pickle.load(f);
+
+# los = network.predict(testImg[109]);
+# print(np.argmax(los));
+# print(testLabel[109]);
+
 network = bpNet();
 
 for index in range(itersNum):
+    if (index % iterPerEpoch == 0):
+        trainAcc = network.accuracy(trainImg, trainLabel);
+        testAcc = network.accuracy(testImg, testLabel);
+        print("训练精度: %s  测试精度: %s" % (trainAcc, testAcc));
     # 获取随机选取的索引
-    choiceIndexs = np.random.choice(trainSize, batchSize);
-    imgs = trainImg[choiceIndexs];
-    labels = trainLabel[choiceIndexs];
-    network.gradient(imgs, labels);
-    los = network.lastLayer.loss;
+    trainIndexs = np.random.choice(trainSize, batchSize);
+    imgs = trainImg[trainIndexs];
+    labels = trainLabel[trainIndexs];
+    network.update(imgs, labels);
 
-    testIndexs = np.random.choice(10000, 100);
-    tstImgs = testImg[testIndexs];
-    tstLabels = testLabel[testIndexs];
-    network.loss(tstImgs, tstLabels);
-    network.accuracy();
-    print(los);
-    network.update();
 with open("network.pkl", "wb") as f:
     pickle.dump(network, f, -1);
 
-
-
-
-# net = bpNet();
-# y = net.gradient(mstData.trainImg, mstData.trainLabel);
-# print(len(net.hiddenLayers));
 
 
